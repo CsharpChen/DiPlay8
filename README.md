@@ -10,7 +10,7 @@
 
 ## 0.2.10 — public preview
 
-Install on the **car**, not the iPhone. No jailbreak, dongle, Mac, account or authentication server is required for use. Core CarPlay does not require ADB; optional dashboard, battery, wheel-speed and parked-video features do. Your head unit must permit APK installation. Wireless supports Wi-Fi Direct or the car’s existing hotspot; Wi-Fi Direct requires Android 10+; the APK supports Android 9+ for wired use.
+Install on the **car**, not the iPhone. No jailbreak, dongle, Mac, account or authentication server is required for use. Core CarPlay does not require ADB; optional dashboard, battery, wheel-speed and parked-video features do. Your head unit must permit APK installation. The APK supports **Android 8.0+ (API 26)** for wired CarPlay and for wireless over the car's existing hotspot; Wi-Fi Direct requires Android 10+ and the LocalOnlyHotspot backend needs newer releases. See [Android 8 support](docs/ANDROID8.md) for what is reduced on Android 8/9.
 
 - Wired USB and wireless CarPlay with local authentication.
 - BYD HUD navigation with arrows, distance and street names on verified firmware.
@@ -41,6 +41,7 @@ Optional video requires network ADB and a valid parked-gear reading. Battery, da
 
 - [Install and connect](docs/INSTALL.md)
 - [Compatibility and troubleshooting](docs/COMPATIBILITY.md)
+- [Android 8 support](docs/ANDROID8.md)
 - [Privacy and diagnostic reports](docs/PRIVACY.md)
 - [Build from source](docs/BUILD.md)
 - [Validation](docs/VALIDATION.md)

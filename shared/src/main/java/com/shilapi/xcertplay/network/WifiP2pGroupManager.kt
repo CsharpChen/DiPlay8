@@ -249,7 +249,7 @@ class WifiP2pGroupManager(
         if (removeGroup && activeChannel != null) {
             removeGroupBlocking(activeChannel)
         }
-        activeChannel?.close()
+        activeChannel?.closeChannel()
         activeThread?.quitSafely()
     }
 
@@ -512,7 +512,10 @@ class WifiP2pGroupManager(
         val fiveGhzSupported = runCatching { wifi?.is5GHzBandSupported }.getOrNull()
         val wifiEnabled = runCatching { wifi?.isWifiEnabled }.getOrNull()
         val locationEnabled = runCatching {
-            appContext.getSystemService(LocationManager::class.java)?.isLocationEnabled
+            val manager = appContext.getSystemService(LocationManager::class.java)
+            // isLocationEnabled() is API 28; Android 8.0/8.1 has no aggregate location mode.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) manager?.isLocationEnabled
+            else manager?.isProviderEnabled(LocationManager.GPS_PROVIDER)
         }.getOrNull()
         val required = if (Build.VERSION.SDK_INT >= 33) Manifest.permission.NEARBY_WIFI_DEVICES
             else Manifest.permission.ACCESS_FINE_LOCATION
@@ -617,8 +620,16 @@ class WifiP2pGroupManager(
         if (removeGroup && failedChannel != null) {
             removeGroupBlocking(failedChannel)
         }
-        failedChannel?.close()
+        failedChannel?.closeChannel()
         failedThread?.quitSafely()
+    }
+
+    /**
+     * `WifiP2pManager.Channel.close()` only exists from Android 8.1 (API 27). On Android 8.0 the
+     * channel is released by dropping the reference, which is what this manager already does.
+     */
+    private fun WifiP2pManager.Channel.closeChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) close()
     }
 
     private fun removeGroupBlocking(channel: WifiP2pManager.Channel, expectedName: String? = observedCreatedName ?: requestedName) {

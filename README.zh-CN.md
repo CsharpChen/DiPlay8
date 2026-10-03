@@ -6,7 +6,7 @@
 
 [下载与中文网站](https://shihabal3amri.github.io/DiPlay/zh-Hans/) · [完整说明](README.md) · [报告问题](https://github.com/shihabal3amri/DiPlay/issues/new/choose)
 
-0.2.9 为公开预览版，未经 Apple 认证。请安装在车机上，而非 iPhone。无需越狱、转接盒或认证服务器。无线连接支持车载热点或 Wi-Fi Direct（后者需要 Android 10 或更高版本）。
+0.2.9 为公开预览版，未经 Apple 认证。请安装在车机上，而非 iPhone。无需越狱、转接盒或认证服务器。APK 支持 Android 8.0（API 26）及以上：Android 8/9 可用有线 CarPlay 与车载热点无线连接；Wi-Fi Direct 需要 Android 10 或更高版本。详见 [Android 8 支持说明](docs/ANDROID8.md)。
 
 - 可选在中控屏显示仪表地图悬浮卡片：拖动位置、双指缩放、点击打开 CarPlay。仪表地图继续显示；需允许显示在其他应用上层。
 - 改进地图缩放：放下双指时不再突然改变尺寸，达到最小或最大尺寸后反向缩放立即响应。

@@ -4,7 +4,7 @@ This public preview is an independent receiver, not an Apple-certified CarPlay a
 
 | Area | Current scope |
 | --- | --- |
-| Head unit | Android 9+ APK; wireless Wi-Fi Direct path needs Android 10+ |
+| Head unit | Android 8.0+ (API 26) APK; wired and car-hotspot wireless work on Android 8/9, the wireless Wi-Fi Direct path needs Android 10+ and LocalOnlyHotspot needs newer releases |
 | Phone | Standard, non-jailbroken iPhone with CarPlay enabled; device/iOS compatibility varies |
 | Physical evidence | Previous private builds: wired and wireless picture, touch and audio confirmed on the development car with iPhone XS / iOS 18.7.10 |
 | Other cars | Mixed community reports across DiLink generations; not a certified model support list |
@@ -18,6 +18,7 @@ See [BYD navigation](BYD_NAVIGATION.md) for the exact verified firmware and life
 
 ## Known limitations
 
+- Android 8.0/8.1: supported for wired CarPlay and for wireless over the car's own hotspot. Wi-Fi Direct is hidden because `WifiP2pManager.createGroup(channel, config, listener)` and `WifiP2pConfig.Builder` are Android 10 APIs, and the local-only hotspot backend is not offered. See [Android 8 support](ANDROID8.md).
 - Some units stutter, particularly under higher video load. A 2.4 GHz link alone does not prove the cause: interference, firmware and decoder stalls can all contribute. Try Default icons, 30 fps and a lower resolution, then attach a report.
 - Some iOS/head-unit combinations do not visibly apply icon and text size. Reconnection is implemented; that does not guarantee the iPhone chooses the requested layout.
 - A radio that supports joining a 5 GHz network may still reject a 5 GHz Wi-Fi Direct group. The capability flag is diagnostic, not proof of group-owner support.

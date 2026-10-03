@@ -85,6 +85,11 @@ class StandaloneHudDemoActivity : Activity() {
         check(Build.FINGERPRINT == "BYD-AUTO/IVI/IVI:13/TP1A.220624.014/eng.build20260722.221155:user/release-keys") {
             "This test is restricted to the inspected firmware"
         }
+        // The inspected stock receiver firmware is Android 13, and the package signing APIs
+        // used below only exist from Android 9 (API 28).
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            throw IllegalStateException("This test is restricted to Android 9 or newer firmware")
+        }
         val info = packageManager.getPackageInfo(target.packageName, PackageManager.GET_SIGNING_CERTIFICATES)
         check(info.longVersionCode == 10601004L) { "Different stock receiver version" }
         check(info.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM != 0)

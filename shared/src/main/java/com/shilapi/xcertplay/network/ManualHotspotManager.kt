@@ -394,8 +394,7 @@ class ManualHotspotManager(
         }
     }
 
-    private fun ByteArray.toMacAddressString(): String =
-        joinToString(":") { byte -> "%02x".format(byte.toInt() and 0xff) }
+    private fun ByteArray.toMacAddressString(): String = MacAddressText.format(this)
 
     private fun sleep(nanos: Long) {
         try {

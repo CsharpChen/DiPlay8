@@ -1,5 +1,6 @@
 package com.shilapi.xcertplay
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -52,6 +53,9 @@ class MapEmbedService : Service() {
 
     override fun onBind(intent: Intent): IBinder = messenger.binder
 
+    // Embed only exists from Android 11: attach() refuses to create one below that, so every
+    // Embed touch point in this service is unreachable on Android 8/9/10.
+    @SuppressLint("NewApi")
     override fun onDestroy() {
         destroyed = true
         stopObservingSharing?.invoke()
@@ -61,6 +65,7 @@ class MapEmbedService : Service() {
         super.onDestroy()
     }
 
+    @SuppressLint("NewApi")
     private fun revokeSharing() {
         if (destroyed) return
         val attached = embeds.values.toList()
@@ -68,6 +73,7 @@ class MapEmbedService : Service() {
         attached.forEach { it.sharingDisabled() }
     }
 
+    @SuppressLint("NewApi")
     private fun handle(message: Message) {
         val client = message.replyTo ?: return
         val caller = packageManager.getNameForUid(message.sendingUid) ?: "uid ${message.sendingUid}"
@@ -116,6 +122,7 @@ class MapEmbedService : Service() {
         send(client, MSG_ERROR, Bundle().apply { putString(KEY_ERROR, error) })
     }
 
+    @SuppressLint("NewApi")
     private fun send(client: Messenger, what: Int, data: Bundle) {
         try {
             client.send(Message.obtain(null, what).apply { this.data = data })

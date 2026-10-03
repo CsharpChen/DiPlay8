@@ -944,6 +944,8 @@ private class AudioRenderer(
                 release = { it.release() },
                 createFallback = {
                     routeLabel = "streamType=$streamType(fallback=usage)"
+                    // AudioTrack.getAudioAttributes() is API 29, so record the fallback here.
+                    trackAttributes = audioAttributesFor(selection)
                     Log.w(TAG, "streamType=$streamType rejected by this ROM; falling back to usage-based track")
                     AudioTrack.Builder()
                         .setAudioAttributes(audioAttributesFor(selection))
@@ -955,7 +957,11 @@ private class AudioRenderer(
             )
         }
         track = built
-        trackAttributes = built.audioAttributes
+        // AudioTrack.getAudioAttributes() exists from Android 10 only; older releases keep the
+        // attributes the track was requested with above.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            trackAttributes = built.audioAttributes
+        }
         val capacityBytes = built.bufferSizeInFrames * frameBytes
         startThresholdBytes = MediaAudioBuffer.startBytesFor(plan.startBytes, capacityBytes, PREBUFFER_WRITE_CHUNK_BYTES)
         report("Audio: ready audioType=${format.audioType} codec=${format.codec} " +

@@ -2,6 +2,10 @@
 
 Requirements: JDK 25, Android SDK 37, NDK 28.2.13676358 and the included Gradle wrapper.
 
+The app is built with `minSdk 26` (Android 8.0) and the NDK builds for `APP_PLATFORM=android-26`,
+so Android 9 and newer install the same artifact. `:automotive` keeps `minSdk 28` and the `:home` /
+`:maphost` samples keep `minSdk 30`; see [Android 8 support](ANDROID8.md).
+
 ## Source and CI builds
 
 ```sh
